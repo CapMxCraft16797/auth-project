@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #btn-login:hover {
+        cursor: pointer;
+      }
+    </style>
+    <script src="node_modules/axios/dist/axios.min.js"></script>
+  </head>
+  <body style="direction: ltr">
+    <div style="height: 100vh" class="center">
+      <div
+        style="
+          background-color: rgb(194, 194, 194);
+          padding: 20px;
+          box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);
+        "
+      >
+        <h1>Log In</h1>
+        <hr />
+        <h3>Email</h3>
+        <input type="email" id="input-email" />
+        <h3>Passward</h3>
+        <input type="password" id="input-password" />
+        <button
+          id="btn-login"
+          style="
+            margin-top: 10px;
+            border: none;
+            border-radius: 2px;
+            display: block;
+          "
+        >
+          Login
+        </button>
+      </div>
+    </div>
+  </body>
+  <script>
+    document.getElementById("btn-login").addEventListener("click", function () {
+      email = document.getElementById("input-email").value;
+      password = document.getElementById("input-password").value;
+      axios
+        .post("https://reqres.in/api/login", {
+          email: email,
+          password: password,
+        })
+        .then(function (response) {
+          let token = response.data.token;
+          localStorage.setItem("token", token);
+          console.log("token received", token);
+          window.location = "login-success.html";
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+  </script>
+</html>
